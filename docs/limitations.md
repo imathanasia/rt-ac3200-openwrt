@@ -9,7 +9,7 @@
 | 5 | LuCI 25.12 has no "pretty" third-party themes | LuCI was rewritten client-side in 24.10+; argon-era themes are unmaintained | the built-in theme; the visual payoff is the Statistics/dashboard stack |
 | 6 | AdGuard Home does not filter before first boot | it needs a config; ours is pre-seeded, so this only applies to a blank install | bake `scripts/first-boot/adguardhome.yaml` (already done in v2/v3) |
 
-### Update (2026-11-13): 5 GHz does work — at 20 MHz
+### Update (2026-11-13): 5 GHz does work - at 40 MHz
 
 Earlier notes here said the second 5 GHz radio had to stay off and that only UNII-1 was usable in
 theory. Measured on the unit:

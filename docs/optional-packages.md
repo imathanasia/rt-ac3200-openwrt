@@ -8,7 +8,7 @@ Reasons are honest: RAM, flash, redundancy, or no hardware to drive.
 | Package | Why not baked |
 |---|---|
 | `luci-app-dawn` | alternative band-steering; `usteer` already does it, running both fights |
-| `luci-app-dcwapd` | dynamic channel width — interesting, but 5 GHz is fixed at 20 MHz here |
+| `luci-app-dcwapd` | dynamic channel width — interesting, but 5 GHz is fixed at 40 MHz here |
 | `luci-app-omcproxy` | IGMP/MLD proxy for IPTV; only useful with a multicast source |
 | `luci-app-eoip` | Ethernet-over-IP bridge; a lab toy |
 | `luci-app-travelmate` | already baked |
