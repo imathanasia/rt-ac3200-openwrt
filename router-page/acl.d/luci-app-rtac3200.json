@@ -1,0 +1,9 @@
+{
+	"luci-app-rtac3200": {
+		"description": "Grant access to the RT-AC3200 project page",
+		"read": {
+			"ubus": { "session": [ "access" ] },
+			"uci": [ "luci" ]
+		}
+	}
+}

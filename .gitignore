@@ -1,0 +1,4 @@
+# firmware binaries go to GitHub Releases, not into git
+firmware/*.trx
+firmware/*.bin
+*.zip

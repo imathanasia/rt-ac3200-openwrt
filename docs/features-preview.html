@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RT-AC3200 · OpenWrt 25.12 build — project page (mockup)</title>
+<style>
+:root{--bg:#0d1117;--panel:#161b22;--line:#263041;--txt:#e6edf3;--mut:#8b949e;--acc:#4f9cf9;--grn:#3fb950;--amb:#d29922}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font:15px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:var(--acc);text-decoration:none}a:hover{text-decoration:underline}
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+header{position:sticky;top:0;background:rgba(13,17,23,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:5}
+nav{display:flex;gap:22px;align-items:center;height:56px}
+nav .brand{font-weight:700;letter-spacing:.3px}
+nav .brand span{color:var(--acc)}
+nav a{color:var(--mut);font-size:14px}
+nav a:hover{color:var(--txt)}
+.hero{padding:64px 0 40px;border-bottom:1px solid var(--line);background:radial-gradient(1200px 340px at 20% 0%,rgba(79,156,249,.14),transparent)}
+h1{font-size:40px;margin:0 0 10px;letter-spacing:-.5px}
+h1 small{display:block;font-size:15px;color:var(--mut);font-weight:400;margin-top:8px;letter-spacing:0}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.b{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:13px;color:var(--mut)}
+.b.g{color:var(--grn);border-color:#234a2c}.b.a{color:var(--amb);border-color:#5b4515}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:820px){.g2,.g3{grid-template-columns:1fr}}
+section{padding:44px 0;border-bottom:1px solid var(--line)}
+h2{font-size:22px;margin:0 0 6px}
+.sub{color:var(--mut);margin:0 0 22px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.card h3{margin:0 0 6px;font-size:15px}
+.card p{margin:0;color:var(--mut);font-size:13.5px}
+.card .tag{color:var(--acc);font-size:12px;letter-spacing:.4px;text-transform:uppercase}
+table{width:100%;border-collapse:collapse;font-size:14px}
+td,th{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+td.k{color:var(--mut);width:40%}
+code{background:#0b1016;border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:13px;color:#d6c9a8}
+pre{background:#0b1016;border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow:auto;font-size:13px;color:#c9d1d9}
+.step{display:flex;gap:14px;padding:12px 0;border-bottom:1px dashed var(--line)}
+.step:last-child{border-bottom:0}
+.n{flex:0 0 26px;height:26px;border-radius:50%;background:#12233a;border:1px solid var(--acc);color:var(--acc);display:grid;place-items:center;font-size:13px;font-weight:700}
+.shot{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.shot .ph{height:200px;background:repeating-linear-gradient(45deg,#121822,#121822 12px,#0e141c 12px,#0e141c 24px);display:grid;place-items:center;color:var(--mut);font-size:13px;text-align:center;padding:0 12px}
+.shot figcaption{padding:10px 14px;font-size:13px;color:var(--mut);border-top:1px solid var(--line)}
+.warn{background:#1d1505;border:1px solid #5b4515;border-radius:10px;padding:12px 16px;color:#e3c47a;font-size:14px}
+.ok{background:#0d2417;border:1px solid #234a2c;border-radius:10px;padding:12px 16px;color:#8ee2a8;font-size:14px}
+footer{padding:30px 0 50px;color:var(--mut);font-size:13px}
+.kv{display:grid;grid-template-columns:160px 1fr;gap:6px 14px;font-size:14px}
+.kv b{color:var(--mut);font-weight:500}
+</style>
+</head>
+<body>
+<header><div class="wrap"><nav>
+  <span class="brand">RT-AC3200 <span>/</span> OpenWrt</span>
+  <a href="#features">Features</a><a href="#flash">Flash guide</a><a href="#build">How it was built</a><a href="#limits">Limits</a><a href="#shots">Screenshots</a>
+</nav></div></header>
+
+<div class="hero"><div class="wrap">
+  <h1>ASUS RT-AC3200 on OpenWrt 25.12
+    <small>A maintained, pre-configured build for a 2015 Broadcom tri-band router — AP mode, AdGuard Home, Tailscale, stats and USB storage, all baked into the flashable image.</small></h1>
+  <div class="badges">
+    <span class="b g">OpenWrt 25.12-SNAPSHOT</span>
+    <span class="b g">kernel 6.12.116</span>
+    <span class="b">bcm53xx / arm Cortex-A9</span>
+    <span class="b">3× BCM43602 radios</span>
+    <span class="b">256 MB RAM</span>
+    <span class="b">128 MB NAND</span>
+    <span class="b a">no hardware NAT</span>
+  </div>
+</div></div>
+
+<section id="specs"><div class="wrap">
+  <h2>Hardware — as verified on the unit</h2>
+  <p class="sub">Values read from the running kernel / boot log, not from a spec sheet.</p>
+  <div class="g2">
+    <div class="card"><h3>SoC / CPU</h3><p>Broadcom BCM4709A0, ARMv7 Cortex-A9, 2 cores @ 1 GHz (L2 512 KB, MPCORE GIC)</p></div>
+    <div class="card"><h3>Memory / Flash</h3><p>256 MB DDR3, 128 MB NAND (Spansion, 2 KB page, BCH8 ECC), dual-bank UBI</p></div>
+    <div class="card"><h3>Radios</h3><p>3× BCM43602 (PCIe): 2× 5 GHz + 1× 2.4 GHz · MACs xx:xx:xx:xx:xx:xx/f4/f8</p></div>
+    <div class="card"><h3>Ethernet</h3><p>4× GbE LAN + 1× GbE WAN via BCM53012 switch in the SoC</p></div>
+    <div class="card"><h3>USB</h3><p>1× USB 3.0 (xHCI) + 2× USB 2.0 (EHCI/OHCI) — storage, SMB, LTE stick</p></div>
+    <div class="card"><h3>Serial / recovery</h3><p>Internal 4-pin 3.3 V TTL header · ASUS CFE recovery web UI at 192.168.1.1</p></div>
+  </div>
+</div></section>
+
+<section id="features"><div class="wrap">
+  <h2>What's baked into the image</h2>
+  <p class="sub">Every item below was enabled and validated on the physical router before being baked in.</p>
+  <div class="grid g3">
+    <div class="card"><span class="tag">Wi-Fi</span><h3>3-radio AP out of the box</h3><p>AC3200-5G ch36 VHT80 + AC3200-2G ch1 HT20, WPA2-PSK, country PL, bridged to LAN.</p></div>
+    <div class="card"><span class="tag">DNS</span><h3>AdGuard Home, pre-configured</h3><p>DNS on 127.0.0.1:5353, Quad9 DoH upstream, AdGuard filter on. dnsmasq → AdGuard → upstream with automatic fallback.</p></div>
+    <div class="card"><span class="tag">VPN</span><h3>Tailscale + WireGuard + OpenVPN</h3><p>Subnet router for your LAN, kernel WireGuard, OpenVPN client/server.</p></div>
+    <div class="card"><span class="tag">QoS</span><h3>SQM / cake</h3><p>Ready for your line speed (set up in LuCI → SQM).</p></div>
+    <div class="card"><span class="tag">Stats</span><h3>LuCI dashboard</h3><p>collectd RRD graphs (CPU, load, RAM, interfaces, per-radio iwinfo), per-device nlbwmon, vnstat2 totals, wifi history, web terminal.</p></div>
+    <div class="card"><span class="tag">Storage</span><h3>USB NAS</h3><p>ksmbd SMB3 + wsdd2, ext4/NTFS/exFAT auto-mount, SMART, one-command extroot to a USB drive.</p></div>
+    <div class="card"><span class="tag">Remote</span><h3>Web terminal + SSH</h3><p>ttyd in the browser, dropbear SSH, root password set (no blank password).</p></div>
+    <div class="card"><span class="tag">Ops</span><h3>Self-updating</h3><p>Attended Sysupgrade (one-click OpenWrt updates), GUI app store, package manager, NTP.</p></div>
+    <div class="card"><span class="tag">SIM</span><h3>USB LTE / 5G stick</h3><p>MBIM + Option + usb-modeswitch drivers baked in for a USB cellular modem.</p></div>
+  </div>
+</div></section>
+
+<section id="flash"><div class="wrap">
+  <h2>Flashing it (no serial console)</h2>
+  <p class="sub">The stock ASUS / Merlin web UI rejects third-party images ("Invalid Firmware Upload — certification rule"), so use the recovery path.</p>
+  <div class="step"><div class="n">1</div><div><b>Get the file.</b> Download <code>openwrt-bcm53xx-generic-asus_rt-ac3200-squashfs.trx</code> (34 MB) and verify <code>sha256sum</code>.</div></div>
+  <div class="step"><div class="n">2</div><div><b>Recovery mode.</b> Power off → hold <b>Reset</b> → power on → keep holding until the <b>Power LED blinks slowly</b> (~5–10 s) → release.</div></div>
+  <div class="step"><div class="n">3</div><div><b>Send the image.</b> PC: static <code>192.168.1.10/24</code>, gateway <code>192.168.1.1</code>, cable to a LAN port. Either the ASUS Firmware Restoration utility, or plain TFTP: <code>curl -T *.trx tftp://192.168.1.1/</code></div></div>
+  <div class="step"><div class="n">4</div><div><b>Wait 5–10 min</b> — it reboots into OpenWrt. First boot brings up both SSIDs with the baked defaults.</div></div>
+  <div class="warn">Never use 30-30-30 on this board (Broadcom ARM). Keep <code>merlin-fallback/RT-AC3200_384.13_10.trx</code> handy to go back to ASUS firmware via the same recovery procedure.</div>
+  <div class="ok" style="margin-top:12px">The ASUS download page that hosts the recovery tool and the stock firmware is linked from the build's own LuCI page (see "In-router project page" below).</div>
+</div></section>
+
+<section id="build"><div class="wrap">
+  <h2>How it was built</h2>
+  <p class="sub">Plain upstream OpenWrt, no vendor tree — plus the fixes that only appear after you boot the thing.</p>
+  <div class="step"><div class="n">1</div><div><b>Baseline.</b> OpenWrt 25.12 branch, <code>CONFIG_TARGET_bcm53xx_generic</code>, device profile <code>asus_rt-ac3200</code> — upstream already supports the board (mainline DTS <code>bcm4709-asus-rt-ac3200.dts</code>, brcmfmac + <code>brcmfmac43602-pcie.bin</code>).</div></div>
+  <div class="step"><div class="n">2</div><div><b>Boot it once.</b> Found the real hardware facts from the running unit (3 radios, MACs, NAND geometry, CLM blob missing, LAN had no gateway in AP mode, AdGuard stuck in first-run, blank root password, Wi-Fi defaults disabled).</div></div>
+  <div class="step"><div class="n">3</div><div><b>Package the feature set.</b> 315 packages: AdGuard Home, Tailscale, WireGuard, OpenVPN, SQM, collectd+nlbwmon+vnstat2, ksmbd, usb storage, ttyd, ddns/acme, and more.</div></div>
+  <div class="step"><div class="n">4</div><div><b>Bake first-boot config</b> as <code>/etc/uci-defaults/</code> scripts + config files (Wi-Fi, AP mode, AdGuard yaml, root password, collectd/tailscale configs, logd/fstab hygiene) and a <code>/root/usb-overlay.sh</code> helper.</div></div>
+  <div class="step"><div class="n">5</div><div><b>Validate on metal</b> — each script executed on the live router, then the squashfs was unpacked out of the final .trx to prove every file is inside the shipped image.</div></div>
+  <pre>scripts/config/conf --olddefconfig Config.in
+make -j$(nproc)
+# files/ at the tree root = what gets baked
+# target artifact: bin/targets/bcm53xx/generic/openwrt-bcm53xx-generic-asus_rt-ac3200-squashfs.trx</pre>
+</div></section>
+
+<section id="limits"><div class="wrap">
+  <h2>Honest limitations</h2>
+  <p class="sub">Hardware/driver limits, not build problems.</p>
+  <div class="grid g2">
+    <div class="card"><h3>Only UNII-1 on 5 GHz</h3><p>brcmfmac has no vendor regulatory blob (<code>brcmfmac43602-pcie.clm_blob</code>), so channels 100/149 are refused. The second 5 GHz radio is therefore left off — both would sit on ch36. Your ASUS firmware used ch36 + ch100, so the hardware supports it.</p></div>
+    <div class="card"><h3>No hardware NAT offload</h3><p>Broadcom: NAT is CPU-bound, ~600–900 Mbit/s on a gigabit line. About the same ceiling as the ASUS firmware.</p></div>
+    <div class="card"><h3>AP mode only</h3><p>brcmfmac FullMAC cannot run station/WDS; AiMesh / AiProtection are ASUS-only.</p></div>
+    <div class="card"><h3>LuCI 25.12 skins</h3><p>The classic "argon"-style themes are not maintained for the new LuCI; the built-in theme is what ships.</p></div>
+  </div>
+</div></section>
+
+<section id="shots"><div class="wrap">
+  <h2>Screenshots</h2>
+  <p class="sub">Placeholders in this mockup — the real repo will have captures pulled from a running unit (LuCI status, collectd graphs, AdGuard UI, Tailscale, AP-mode status).</p>
+  <div class="grid g3">
+    <figure class="shot"><div class="ph">LuCI — Overview / realtime graphs</div><figcaption>Status → Overview</figcaption></figure>
+    <figure class="shot"><div class="ph">LuCI — collectd RRD graphs</div><figcaption>Statistics → System graphs</figcaption></figure>
+    <figure class="shot"><div class="ph">LuCI — per-device bandwidth</div><figcaption>Statistics → nlbwmon</figcaption></figure>
+    <figure class="shot"><div class="ph">AdGuard Home UI</div><figcaption>http://router:3000</figcaption></figure>
+    <figure class="shot"><div class="ph">LuCI — Wireless (3 radios)</div><figcaption>Network → Wireless</figcaption></figure>
+    <figure class="shot"><div class="ph">In-router project page</div><figcaption>this repo + recovery tool links</figcaption></figure>
+  </div>
+</div></section>
+
+<section id="routerpage"><div class="wrap">
+  <h2>In-router project page (baked into LuCI)</h2>
+  <p class="sub">A tiny LuCI app so anyone who flashes the image can find this repo and the recovery tool from the router itself.</p>
+  <pre>Services → RT-AC3200 Project
+┌──────────────────────────────────────────────────────────────┐
+│ This firmware is a custom OpenWrt 25.12 build for the        │
+│ ASUS RT-AC3200 (H/W R4.12).                                  │
+│                                                              │
+│ Project / source / releases                                  │
+│   https://github.com/&lt;you&gt;/rt-ac3200-openwrt            │
+│                                                              │
+│ Flash / recovery tool (ASUS)                                 │
+│   https://www.asus.com/us/supportonly/rt-ac3200/helpdesk_download/ │
+│                                                              │
+│ Back to ASUS firmware                                        │
+│   merlin-fallback/RT-AC3200_384.13_10.trx                    │
+│                                                              │
+│ Credentials on this image:  root / ac3200-admin              │
+│ AdGuard Home admin:          admin / ac3200-admin           │
+└──────────────────────────────────────────────────────────────┘</pre>
+</div></section>
+
+<footer><div class="wrap">
+  Project and packaging by <b>ImAthanasia</b>. Repository URL and license are placeholders in this mockup.<br>
+  Preview served locally — this page is a mockup, not the final site.
+</div></footer>
+</body>
+</html>

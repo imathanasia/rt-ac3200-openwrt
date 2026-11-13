@@ -1,0 +1,33 @@
+config system
+	option hostname 'RT-AC3200'
+	option timezone 'CET-1CEST,M3.5.0,M10.5.0/3'
+	option zonename 'Europe/Warsaw'
+	option log_size '64'
+	option log_proto 'udp'
+	option conloglevel '7'
+	option cronloglevel '7'
+
+config timeserver 'ntp'
+	option enabled '1'
+	list server '0.openwrt.pool.ntp.org'
+	list server '1.openwrt.pool.ntp.org'
+	list server '2.openwrt.pool.ntp.org'
+	list server '3.openwrt.pool.ntp.org'
+
+config led 'led_power'
+	option name 'Power (white)'
+	option sysfs 'white:power'
+	option trigger 'default-on'
+
+config led 'led_wps'
+	option name 'WPS (white)'
+	option sysfs 'white:wps'
+	option trigger 'none'
+	option default '0'
+
+config led 'led_wan'
+	option name 'Internet / activity (red)'
+	option sysfs 'red:wan'
+	option trigger 'netdev'
+	option dev 'br-lan'
+	option mode 'link tx rx'

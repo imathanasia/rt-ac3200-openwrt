@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RT-AC3200 · OpenWrt build</title>
+<style>
+:root{--bg:#0b0f16;--panel:#131a24;--line:#233043;--txt:#e6edf3;--mut:#8b98a9;--acc:#58a6ff;--grn:#3fb950;--amb:#d29922;--pur:#bc8cff}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(1200px 400px at 15% -10%,#12325a33,transparent),var(--bg);color:var(--txt);font:15px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.w{max-width:1000px;margin:0 auto;padding:34px 22px 60px}
+a{color:var(--acc);text-decoration:none}a:hover{text-decoration:underline}
+header{display:flex;align-items:center;gap:14px;margin-bottom:6px}
+header svg{flex:0 0 44px}
+h1{font-size:27px;margin:0}h1 small{display:block;font-size:13.5px;color:var(--mut);font-weight:400;margin-top:4px}
+.badges{display:flex;flex-wrap:wrap;gap:7px;margin:16px 0 26px}
+.b{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:3px 11px;font-size:12.5px;color:var(--mut)}
+.b.g{color:var(--grn);border-color:#1f4a2b}.b.a{color:var(--amb);border-color:#57430f}
+h2{font-size:13px;color:var(--mut);text-transform:uppercase;letter-spacing:.7px;margin:26px 0 10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:11px}
+a.card{display:flex;gap:12px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 14px;color:var(--txt);transition:.15s}
+a.card:hover{border-color:#3d6ea8;background:#16202c;text-decoration:none}
+a.card svg{flex:0 0 22px;margin-top:1px}
+a.card b{display:block;font-size:14.5px;font-weight:600}
+a.card span{display:block;color:var(--mut);font-size:12.5px;margin-top:2px}
+.note{background:#101722;border:1px solid var(--line);border-radius:12px;padding:13px 16px;color:var(--mut);font-size:13.5px;margin-top:26px}
+code{background:#0a0f16;border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:12.5px}
+.f{margin-top:26px;color:#5c6878;font-size:12px}
+.hero{display:block;margin:0 0 18px}
+.hero img{display:block;width:100%;height:auto;border-radius:16px;border:1px solid var(--line)}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+svg.i{stroke:currentColor;stroke-width:1.7;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.c1{color:var(--acc)}
+a.card,div.card{display:flex;gap:12px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 14px;color:var(--txt)}
+div.card{flex-wrap:wrap}
+div.card b{display:block;font-size:14.5px;font-weight:600}
+div.card span{display:block;color:var(--mut);font-size:12.5px;margin-top:2px;flex:1 1 100%}
+button.go{background:#1f6feb;color:#fff;border:0;border-radius:8px;padding:7px 14px;font:inherit;font-size:13px;font-weight:600;cursor:pointer}
+button.go:active{transform:translateY(1px)}
+button.go[disabled]{background:#1f6feb55;cursor:default}
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:0 0 6px}
+@media(max-width:700px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:9px 11px}
+.tile span{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--mut)}
+.tile b{font-size:19px;font-weight:600;line-height:1.25}
+.tile i{font-style:normal;font-size:11px;color:var(--mut);margin-left:2px}
+.tile.ok b{color:var(--grn)}.tile.bad b{color:#f85149}
+.tag{font-size:10.5px;text-transform:none;letter-spacing:0;color:var(--amb);border:1px solid #57430f;border-radius:999px;padding:1px 7px;margin-left:8px;vertical-align:middle}
+div.card.soon{opacity:.62}
+.wcard{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-width:0}
+.wcard b{display:block;font-size:14.5px;font-weight:600}
+.wcard span{display:block;color:var(--mut);font-size:12.5px;margin-top:3px;overflow-wrap:anywhere}
+img.qr{display:block;width:132px;height:132px;margin-top:10px;background:#fff;border-radius:8px;padding:4px}
+#devs span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#tout{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;color:var(--mut);white-space:pre-wrap;margin-top:6px;flex:1 1 100%}.c2{color:var(--grn)}.c3{color:var(--pur)}.c4{color:var(--amb)}.c5{color:#39c5cf}
+</style></head><body><div class="w">
+
+<h1 class="vh">ASUS RT-AC3200 — OpenWrt 25.12 build</h1>
+<a class="hero" href="/rtac3200.html" aria-label="ASUS RT-AC3200 OpenWrt build">
+<img src="/rtac3200-logo.svg" alt="ASUS RT-AC3200 — OpenWrt 25.12 — BCM4709A0, ARM Cortex-A9, 2×1 GHz — supercharged">
+</a>
+
+<div class="tiles">
+<div class="tile"><span>temp</span><b id="t-temp">–</b><i>°C</i></div>
+<div class="tile"><span>load 1m</span><b id="t-load">–</b></div>
+<div class="tile"><span>RAM free</span><b id="t-ram">–</b><i>MB</i></div>
+<div class="tile"><span>uptime</span><b id="t-up">–</b></div>
+<div class="tile"><span>wifi clients</span><b id="t-sta">–</b></div>
+<div class="tile"><span>neighbours</span><b id="t-neigh">–</b></div>
+<div class="tile"><span>packages</span><b id="t-pkgs">–</b></div>
+<div class="tile" id="tile-wan"><span>WAN</span><b id="t-wan">–</b></div>
+</div>
+<div class="badges">
+<span class="b g">pre-configured</span><span class="b g">recovery-flashable</span>
+<span class="b">AP mode: <span id="lanip">this box</span></span><span class="b">DNS: AdGuard → Quad9 DoH</span>
+<span class="b">Tailscale + WireGuard</span><span class="b a">no HW NAT offload</span>
+</div>
+
+<h2>Router</h2>
+<div class="grid">
+<a class="card" href="/cgi-bin/luci/"><svg viewBox="0 0 24 24" class="i c1" width="22" height="22"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M7 6.5h.01M10 6.5h.01"/></svg><b>LuCI</b><span>the main web UI</span></a>
+<a class="card" href="/cgi-bin/luci/admin/status/overview"><svg viewBox="0 0 24 24" class="i c2" width="22" height="22"><path d="M4 19V9M9 19V5M14 19v-7M19 19v-4"/></svg><b>Overview</b><span>system + realtime graphs</span></a>
+<a class="card" href="/cgi-bin/luci/admin/statistics/graphs"><svg viewBox="0 0 24 24" class="i c3" width="22" height="22"><path d="M4 17l5-6 4 3 7-9"/><path d="M4 21h16"/></svg><b>Statistics</b><span>CPU, RAM, temp, interfaces</span></a>
+<a class="card" href="/cgi-bin/luci/admin/services/nlbw/display"><svg viewBox="0 0 24 24" class="i c5" width="22" height="22"><circle cx="12" cy="12" r="8.5"/><path d="M12 12l4-3"/><path d="M12 3.5v2M20.5 12h-2"/></svg><b>Per-device traffic</b><span>nlbwmon</span></a>
+<a class="card" href="/cgi-bin/luci/admin/status/vnstat2"><svg viewBox="0 0 24 24" class="i c4" width="22" height="22"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><path d="M7 15l3-4 3 2 4-6"/></svg><b>Traffic totals</b><span>vnstat2, daily/monthly</span></a>
+<a class="card" href="/cgi-bin/luci/admin/network/wireless"><svg viewBox="0 0 24 24" class="i c1" width="22" height="22"><path d="M3.5 9a13 13 0 0 1 17 0"/><path d="M6.5 12.5a8.5 8.5 0 0 1 11 0"/><path d="M9.5 16a4.5 4.5 0 0 1 5 0"/><circle cx="12" cy="19" r="1.1" fill="currentColor" stroke="none"/></svg><b>Wi-Fi</b><span>AC3200-2G · 5G · 5G-2</span></a>
+</div>
+
+<h2>Services</h2>
+<div class="grid">
+<a class="card" href="#" id="adg"><svg viewBox="0 0 24 24" class="i c2" width="22" height="22"><path d="M12 3l7 3v5.5c0 4.4-3 7.6-7 9.5-4-1.9-7-5.1-7-9.5V6z"/><path d="M9 12l2 2 4-4"/></svg><b>AdGuard Home</b><span>DNS filtering, :3000</span></a>
+<a class="card" href="/cgi-bin/luci/admin/services/tailscale"><svg viewBox="0 0 24 24" class="i c3" width="22" height="22"><circle cx="8" cy="8" r="2.2"/><circle cx="16" cy="16" r="2.2"/><circle cx="16" cy="8" r="2.2"/><path d="M10.2 8h3.6M8.8 10l5.4 4.2"/></svg><b>Tailscale</b><span>subnet router / exit node</span></a>
+<a class="card" href="/cgi-bin/luci/admin/status/wireguard"><svg viewBox="0 0 24 24" class="i c5" width="22" height="22"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="3"/></svg><b>WireGuard</b><span>peer / server</span></a>
+<a class="card" href="/cgi-bin/luci/admin/network/sqm"><svg viewBox="0 0 24 24" class="i c4" width="22" height="22"><path d="M4 12h4l2-5 3 10 2-5h5"/></svg><b>SQM / cake</b><span>bufferbloat control</span></a>
+<a class="card" href="/cgi-bin/luci/admin/services/ksmbd"><svg viewBox="0 0 24 24" class="i c1" width="22" height="22"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M7 10h4M7 13h7"/></svg><b>SMB share</b><span>ksmbd, USB storage</span></a>
+<a class="card" href="/cgi-bin/luci/admin/network/usteer"><svg viewBox="0 0 24 24" class="i c2" width="22" height="22"><path d="M4 17a8 8 0 0 1 16 0"/><path d="M12 9v8"/><circle cx="12" cy="6.5" r="1.6"/></svg><b>Band steering</b><span>usteer, 2.4 ↔ 5 GHz</span></a>
+<a class="card" href="/cgi-bin/luci/admin/services/ttyd"><svg viewBox="0 0 24 24" class="i c3" width="22" height="22"><rect x="3" y="4.5" width="18" height="14" rx="2"/><path d="M7 9.5l2.5 2.5L7 14.5M12.5 15H17"/></svg><b>Terminal</b><span>ttyd in the browser</span></a>
+<a class="card" href="/cgi-bin/luci/admin/services/banip/overview"><svg viewBox="0 0 24 24" class="i c4" width="22" height="22"><circle cx="12" cy="12" r="8.5"/><path d="M6 6l12 12"/></svg><b>banIP</b><span>blocklists</span></a>
+</div>
+
+<h2>This build</h2>
+<div class="grid">
+<a class="card" href="https://github.com/ImAthanasia/rt-ac3200-openwrt/releases"><svg viewBox="0 0 24 24" class="i c2" width="22" height="22"><path d="M12 3.5v11"/><path d="M8 11l4 4 4-4"/><path d="M4.5 19h15"/></svg><b>Updates</b><span>new builds: releases page</span></a>
+<a class="card" href="https://github.com/ImAthanasia/rt-ac3200-openwrt"><svg viewBox="0 0 24 24" class="i c1" width="22" height="22"><path d="M9 18c-4 1.2-4-2-5.5-2.8M15 21v-3.4a2.6 2.6 0 0 0-.7-2c2.4-.3 4.9-1.2 4.9-5.4a4.2 4.2 0 0 0-1.2-2.9 3.9 3.9 0 0 0-.1-2.9s-.9-.3-3.1 1.2a10.5 10.5 0 0 0-5.6 0C6.1 2.3 5.2 2.6 5.2 2.6a3.9 3.9 0 0 0-.1 2.9A4.2 4.2 0 0 0 3.9 8.4c0 4.1 2.5 5.1 4.9 5.4a2.6 2.6 0 0 0-.7 2V21"/></svg><b>Project source</b><span>docs, builds, screenshots</span></a>
+<a class="card" href="https://www.asus.com/us/supportonly/rt-ac3200/helpdesk_download/"><svg viewBox="0 0 24 24" class="i c4" width="22" height="22"><path d="M12 3.5v11"/><path d="M8 11l4 4 4-4"/><path d="M4.5 19h15"/></svg><b>ASUS recovery tool</b><span>Firmware Restoration</span></a>
+</div>
+
+<h2>Tools</h2>
+<div class="grid">
+<div class="card"><svg viewBox="0 0 24 24" class="i c2" width="22" height="22"><path d="M4 12h3l2-5 3 10 2-5h6"/></svg>
+<b>Ping test</b><span>4 packets to 1.1.1.1, latency and loss</span>
+<button class="go" id="ping">run</button><div id="tout"></div></div>
+<div class="card"><svg viewBox="0 0 24 24" class="i c1" width="22" height="22"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
+<b>Diagnostics</b><span>build, memory, routes, wifi, log tail — copies to clipboard</span>
+<button class="go" id="diag">copy</button></div>
+<div class="card"><svg viewBox="0 0 24 24" class="i c4" width="22" height="22"><path d="M3.5 9a13 13 0 0 1 17 0"/><path d="M6.5 12.5a8.5 8.5 0 0 1 11 0"/><circle cx="12" cy="19" r="1.1" fill="currentColor" stroke="none"/></svg>
+<b>Restart Wi-Fi</b><span>reload all three radios (~8 s, clients reconnect)</span>
+<button class="go" id="wr">restart</button></div>
+</div>
+
+<h2>Wi-Fi</h2>
+<div class="grid" id="radios"></div>
+
+<h2>Connect</h2>
+<div class="grid">
+<div class="wcard"><b>AC3200-5G</b><span>WPA2 · ch 36 · 20 MHz</span>
+<img class="qr" src="/cgi-bin/rtac3200?qr=0" alt="QR for AC3200-5G" loading="lazy"></div>
+<div class="wcard"><b>AC3200-2G</b><span>WPA2 · ch 1 · 20 MHz</span>
+<img class="qr" src="/cgi-bin/rtac3200?qr=1" alt="QR for AC3200-2G" loading="lazy"></div>
+<div class="wcard"><b>AC3200-5G-2</b><span>WPA2 · ch 44 · 20 MHz</span>
+<img class="qr" src="/cgi-bin/rtac3200?qr=2" alt="QR for AC3200-5G-2" loading="lazy"></div>
+</div>
+
+<h2>Devices</h2>
+<div class="grid">
+<div class="wcard" style="grid-column:1/-1"><b>Neighbours</b><span>ARP table, refreshed every 5 s</span>
+<div id="devs" style="margin-top:8px;font-size:11.5px;color:var(--mut);display:grid;grid-template-columns:150px 1fr;gap:3px 16px;font-family:ui-monospace,Menlo,monospace"></div></div>
+</div>
+
+<h2>Services, continued</h2>
+<div class="grid">
+<a class="card" href="/ariang/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" class="i c1" width="22" height="22"><path d="M12 4v10"/><path d="M8 11l4 4 4-4"/><path d="M4 18h16"/></svg><b>AriaNg</b><span>aria2 web UI — torrents, magnets, HTTP</span></a>
+<a class="card" href="/cgi-bin/luci/admin/services/aria2"><svg viewBox="0 0 24 24" class="i c2" width="22" height="22"><circle cx="12" cy="12" r="8.5"/><path d="M8 12h8M12 8v8"/></svg><b>aria2</b><span>download engine settings</span></a>
+<a class="card" href="/cgi-bin/luci/admin/system/filemanager"><svg viewBox="0 0 24 24" class="i c4" width="22" height="22"><path d="M3 7h6l2 2h10v9H3z"/></svg><b>File manager</b><span>browse and edit files on the router/USB</span></a>
+<a class="card" href="/cgi-bin/luci/admin/services/hd_idle"><svg viewBox="0 0 24 24" class="i c3" width="22" height="22"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3 2"/></svg><b>Disk idle</b><span>spin the USB disk down when unused</span></a>
+<a class="card" href="/cgi-bin/luci/admin/services/natmap"><svg viewBox="0 0 24 24" class="i c5" width="22" height="22"><path d="M4 12h16M12 4v16"/><circle cx="12" cy="12" r="8.5"/></svg><b>Port mapping</b><span>natmap: open ports for consoles and games</span></a>
+<a class="card" href="/cgi-bin/luci/admin/services/irqbalance"><svg viewBox="0 0 24 24" class="i c1" width="22" height="22"><path d="M4 7h5l3 10h5"/><path d="M4 17h5l3-10h5"/></svg><b>IRQ balance</b><span>spread interrupts over both cores</span></a>
+</div>
+
+<div class="note">
+<b>Flashing / reverting:</b> use ASUS recovery mode (hold <b>Reset</b> while powering on until the Power LED
+blinks slowly; PC at 192.168.1.10) with the ASUS Firmware Restoration utility or
+<code>curl -T firmware.trx tftp://192.168.1.1/</code>. To go back to ASUS firmware, flash
+<code>RT-AC3200_384.13_10.trx</code> the same way. Never 30-30-30 on this board.
+</div>
+<p class="f">Project and packaging by <b>ImAthanasia</b>. Served locally by uhttpd from <code>/www/rtac3200.html</code>. On this image: <code>root / ac3200-admin</code>,
+AdGuard <code>admin / ac3200-admin</code> — change both after flashing.</p>
+
+<h2>Fun</h2>
+<div class="grid">
+<div class="card"><svg viewBox="0 0 24 24" class="i c4" width="22" height="22"><path d="M4 12h3l2-5 3 10 2-5h6"/></svg>
+<b>LED chase</b><span>Knight-Rider sweep across the three lamps this board has</span>
+<button class="go" id="lc">run</button></div>
+</div>
+</div>
+<script>
+(function(){
+  var b=document.getElementById('lc'); if(!b) return;
+  b.addEventListener('click',function(){
+    b.disabled=true; b.textContent='running…';
+    fetch('/cgi-bin/ledchase?start',{cache:'no-store'}).catch(function(){}).then(function(){
+      setTimeout(function(){ b.disabled=false; b.textContent='run again'; }, 6000);
+    });
+  });
+})();
+</script>
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  function fmtUp(s){var d=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60);return d?d+'d '+h+'h':(h?h+'h '+m+'m':m+'m')}
+  function tick(){
+    fetch('/cgi-bin/rtac3200?stat',{cache:'no-store'}).then(function(r){return r.json()}).then(function(j){
+      $('t-temp').textContent=j.temp; $('t-load').textContent=j.load;
+      $('t-ram').textContent=j.mem.available; $('t-up').textContent=fmtUp(j.uptime);
+      $('t-sta').textContent=j.stations; $('t-neigh').textContent=j.neigh;
+      $('t-wan').textContent=j.wan; var pk=$('t-pkgs'); if(pk&&j.pkgs) pk.textContent=j.pkgs;
+      $('tile-wan').className='tile '+(j.wan==='up'?'ok':'bad');
+    }).catch(function(){});
+  }
+  function esc(v){return String(v)} 
+  function renderRadios(list){
+    var host=$('radios'); if(!host) return;
+    if(!list||!list.length){host.innerHTML='<div class="card soon"><b>no radios reported</b></div>';return}
+    host.innerHTML=list.map(function(r){
+      var up=+r.sta>=0;
+      return '<div class="card" style="flex-direction:column;align-items:stretch">'
+        +'<b>'+r.ssid+'</b>'
+        +'<span>'+r.if+' · channel '+r.ch+' · 20 MHz</span>'
+        +'<span style="margin-top:6px;color:'+(r.sta>0?'#3fb950':'#8b98a9')+'">'+r.sta+' client'+(r.sta===1?'':'s')+'</span></div>';
+    }).join('');
+  }
+  function renderDevs(list){
+    var host=$('devs'); if(!host) return;
+    if(!list||!list.length){host.textContent='none';return}
+    host.innerHTML=list.map(function(c){return '<span>'+c.ip+'</span><span style="color:#5c6878">'+c.mac+'</span>'}).join('');
+  }
+  function tick(){
+    fetch('/cgi-bin/rtac3200?stat',{cache:'no-store'}).then(function(r){return r.json()}).then(function(j){
+      $('t-temp').textContent=j.temp; $('t-load').textContent=j.load;
+      $('t-ram').textContent=j.mem.available; $('t-up').textContent=fmtUp(j.uptime);
+      $('t-sta').textContent=j.stations; $('t-neigh').textContent=j.neigh;
+      $('t-wan').textContent=j.wan; var pk=$('t-pkgs'); if(pk&&j.pkgs) pk.textContent=j.pkgs;
+      $('tile-wan').className='tile '+(j.wan==='up'?'ok':'bad');
+      renderRadios(j.radios); renderDevs(j.clients);
+    }).catch(function(){});
+  }
+  tick(); setInterval(tick,5000);
+  var w=$('wr'); if(w) w.addEventListener('click',function(){
+    w.disabled=true; w.textContent='restarting…';
+    fetch('/cgi-bin/rtac3200?wifi-reload',{cache:'no-store'}).catch(function(){}).then(function(){
+      setTimeout(function(){w.disabled=false;w.textContent='restart'},9000);
+    });
+  });
+  var p=$('ping'); if(p) p.addEventListener('click',function(){
+    p.disabled=true;$('tout').textContent='pinging…';
+    fetch('/cgi-bin/rtac3200?ping',{cache:'no-store'}).then(function(r){return r.json()}).then(function(j){
+      $('tout').textContent=j.summary||(j.ok?'ok':'no reply');p.disabled=false;
+    }).catch(function(){$('tout').textContent='failed';p.disabled=false});
+  });
+  var d=$('diag'); if(d) d.addEventListener('click',function(){
+    d.disabled=true;
+    fetch('/cgi-bin/rtac3200?diag',{cache:'no-store'}).then(function(r){return r.text()}).then(function(t){
+      if(navigator.clipboard) return navigator.clipboard.writeText(t);
+      var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();document.execCommand('copy');a.remove();
+    }).then(function(){d.textContent='copied';setTimeout(function(){d.textContent='copy';d.disabled=false},1600)})
+      .catch(function(){d.textContent='copy failed';d.disabled=false});
+  });
+})();
+</script>
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  function radios(list){
+    var h=$('radios'); if(!h) return;
+    if(!list||!list.length){h.innerHTML='<div class="card soon"><b>no radios reported</b></div>';return}
+    h.innerHTML=list.map(function(r){
+      return '<div class="wcard"><b>'+r.ssid+'</b>'
+        +'<span>'+r.if+' · channel '+r.ch+' · 20 MHz</span>'
+        +'<span style="margin-top:6px;color:'+(r.sta>0?'#3fb950':'#8b98a9')+'">'+r.sta+' client'+(r.sta===1?'':'s')+'</span></div>';
+    }).join('');
+  }
+  function devs(list){
+    var h=$('devs'); if(!h) return;
+    if(!list||!list.length){h.textContent='none';return}
+    var mask=new URLSearchParams(location.search).has('redact');
+    h.innerHTML=list.map(function(c){
+      var mac=mask?'••:••:••:••:••:••':c.mac;
+      return '<span>'+c.ip+'</span><span style="color:#5c6878">'+mac+'</span>';
+    }).join('');
+  }
+  function pull(){fetch('/cgi-bin/rtac3200?stat',{cache:'no-store'}).then(function(r){return r.json()}).then(function(j){
+    radios(j.radios);devs(j.clients);
+    var l=$('lanip'); if(l) l.textContent=location.hostname;
+    var a=$('adg'); if(a) a.href=location.protocol+'//'+location.hostname+':3000/';
+  }).catch(function(){})}
+  pull(); setInterval(pull,5000);
+  var w=$('wr'); if(w) w.addEventListener('click',function(){
+    w.disabled=true; w.textContent='restarting…';
+    fetch('/cgi-bin/rtac3200?wifi-reload',{cache:'no-store'}).catch(function(){}).then(function(){
+      setTimeout(function(){w.disabled=false;w.textContent='restart'},9000);
+    });
+  });
+})();
+</script>
+<script>
+(function(){
+  document.querySelectorAll('img.qr').forEach(function(i){
+    i.addEventListener('error',function(){
+      var d=document.createElement('div');
+      d.style.cssText='margin-top:10px;font-size:11.5px;color:#6e7681';
+      d.textContent='QR appears after the v1.0 build';
+      i.replaceWith(d);
+    });
+  });
+})();
+</script>
+</body></html>
