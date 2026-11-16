@@ -57,6 +57,8 @@ Two traps that cost build cycles:
 
 | repo file | target path | purpose |
 |---|---|---|
+| `scripts/first-boot/89-uhttpd-luci.sh` | `/etc/uci-defaults/89-uhttpd-luci.sh` | ensure LuCI ucode dispatcher |
+| `scripts/first-boot/91-branding.sh` | `/etc/uci-defaults/91-branding.sh` | project version/model branding |
 | `scripts/first-boot/99-wifi.sh` | `/etc/uci-defaults/99-wifi.sh` | SSIDs, channels, country |
 | `scripts/first-boot/98-ap-mode.sh` | `/etc/uci-defaults/98-ap-mode.sh` | LAN 192.168.1.200, gateway, DHCP off, DNS chain |
 | `scripts/first-boot/97-adguard.sh` | `/etc/uci-defaults/97-adguard.sh` | fix AdGuard ownership |
@@ -67,8 +69,14 @@ Two traps that cost build cycles:
 | `scripts/first-boot/fstab` | `/etc/config/fstab` | USB automount |
 | `scripts/first-boot/logd` | `/etc/config/logd` | 256 KB log cap (RAM) |
 | `scripts/first-boot/usb-overlay.sh` | `/root/usb-overlay.sh` | one-command extroot |
-| `router-page/rtac3200.html` | `/www/rtac3200.html` | in-router project page |
+| `router-page/rtac3200.html` | `/www/rtac3200.html` | static project page (compatibility) |
+| `router-page/view/rtac3200.js` | `/www/luci-static/resources/view/rtac3200.js` | authenticated LuCI project page |
+| `router-page/menu.d/luci-app-rtac3200.json` | `/usr/share/luci/menu.d/luci-app-rtac3200.json` | LuCI menu entry |
+| `router-page/acl.d/luci-app-rtac3200.json` | `/usr/share/rpcd/acl.d/luci-app-rtac3200.json` | LuCI ACL |
+| `patches/luci-footer-badge.patch` | applied to LuCI source | project badge in LuCI footer |
 | `package/rtac3200-ledchase/` | `/usr/bin/ledchase` | LED sweep helper (built from source) |
+
+Helper scripts: `scripts/build.sh` accepts `CFG=` (default `config/config.ac3200`), `scripts/screenshots.sh` captures comparable README images.
 
 ## Host quirk: tar ownership
 If the build host's filesystem refuses `chown` to foreign uids (some VMs answer `EINVAL`), unpacking

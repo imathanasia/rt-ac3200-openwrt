@@ -77,7 +77,7 @@ All of this is on the image, set up on first boot. Nothing here needs a terminal
 | **Ops** | GUI package manager (apk), `banip`, `lldpd`, e-mail notifications, `udpxy` (IPTV), `smartdns`/`cloudflared`/`https-dns-proxy`, `mosquitto` (MQTT), `ustreamer`, `nut` (UPS), `dump1090` (SDR) |
 | **AP mode** | LAN static 192.168.1.200/24, gateway + DNS 192.168.1.1, **DHCP off** (the upstream router keeps DHCP) |
 | **One-click commands** | *System → Custom Commands*: "USB drive → overlay (extroot)", "list block devices", "restart AdGuard Home", "wireless status" |
-| **Project page** | *Services → RT-AC3200 Project* opens `/rtac3200.html` (menu entry + ACL are baked in) |
+| **Project page** | *Services → RT-AC3200* opens the authenticated LuCI project page (menu entry + ACL are baked in) |
 | **Hygiene** | root password set (no blank password), logs capped at 256 KB in RAM (nothing written to NAND) |
 
 The current image has 448 packages, is 59.1 MB, and leaves about 55 MB of writable space on NAND.
@@ -108,7 +108,7 @@ Captured from a running unit (headless Chromium, 1440×900 @2x) — the same pag
 | ![Wireless](images/luci-wireless.png) | ![SQM](images/luci-sqm.png) |
 | **Wireless** — the three BCM43602 radios | **SQM / cake** — bufferbloat control |
 | ![AdGuard](images/adguard.png) | ![Router page](images/router-page.png) |
-| **AdGuard Home** — DNS filtering dashboard | **In-router project page** — `/rtac3200.html` (repo + recovery links) |
+| **AdGuard Home** — DNS filtering dashboard | **In-router project page** — authenticated LuCI page (repo + recovery links) |
 
 ## Flashing
 
